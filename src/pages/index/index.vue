@@ -25,7 +25,7 @@ onReady(() => {
         indicator-active-color="#ffffff"
       >
         <swiper-item v-for="(banner, index) in bannerList" :key="index">
-          <image :src="banner" class="banner-image" mode="scaleToFill" />
+          <image class="image" :src="banner" mode="scaleToFill" />
         </swiper-item>
       </swiper>
     </view>
@@ -86,11 +86,6 @@ onReady(() => {
     height: 340rpx;
     border-radius: 10rpx;
     overflow: hidden;
-
-    .banner-image {
-      width: 100%;
-      height: 100%;
-    }
   }
 
   .notice {
@@ -111,6 +106,7 @@ onReady(() => {
 
     .content {
       flex: 1;
+      overflow: hidden;
 
       .item {
         font-size: 24rpx;

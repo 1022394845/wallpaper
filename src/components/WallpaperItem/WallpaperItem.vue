@@ -24,11 +24,6 @@ const { name, date } = defineProps({ name: String, date: String })
     width: 100%;
     height: 100%;
 
-    .image {
-      width: 100%;
-      height: 100%;
-    }
-
     .update {
       position: absolute;
       left: 0;
