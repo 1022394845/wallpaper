@@ -70,6 +70,7 @@ const onContactCall = () => {
     border: 1px solid #eeeeee;
     border-radius: 10rpx;
     box-shadow: 0 0 30rpx rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
 
     .user-operation:last-child {
       border-bottom: none;
