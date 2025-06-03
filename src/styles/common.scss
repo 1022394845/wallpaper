@@ -17,8 +17,10 @@ uni-swiper {
   padding: 30rpx;
   width: 750rpx;
   min-height: 80vh;
-  background: linear-gradient(to bottom, transparent, #ffffff 400rpx),
+  background:
+    linear-gradient(to bottom, transparent, #ffffff 400rpx),
     linear-gradient(to right, #beecd8 20%, #f4e2d8);
+  background-attachment: fixed;
 }
 
 .ellipsis {
