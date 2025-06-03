@@ -36,7 +36,7 @@ onReady(() => {
       <text class="title">公告</text>
       <view class="content">
         <swiper autoplay circular vertical>
-          <swiper-item class="ellipsis" v-for="(item, index) in 3" :key="index">
+          <swiper-item class="item ellipsis" v-for="(item, index) in 3" :key="index">
             公告内容
           </swiper-item>
         </swiper>
@@ -45,15 +45,15 @@ onReady(() => {
     </view>
 
     <!-- 推荐 -->
-    <div class="recommend">
-      <CommentTitle title="每日推荐">
+    <view class="recommend">
+      <CommonTitle title="每日推荐">
         <template #custom>
           <uni-icons type="calendar" size="20" color="#28b389" />
           <view style="margin-left: 5rpx; color: #28b389">
             <uni-dateformat :date="Date.now()" format="dd" />号
           </view>
         </template>
-      </CommentTitle>
+      </CommonTitle>
       <scroll-view class="list" scroll-x>
         <image
           v-for="(item, index) in 5"
@@ -63,7 +63,19 @@ onReady(() => {
           mode="scaleToFill"
         />
       </scroll-view>
-    </div>
+    </view>
+
+    <!-- 精选 -->
+    <view class="topic">
+      <CommonTitle title="专题精选">
+        <template #custom>
+          <view>更多+</view>
+        </template>
+      </CommonTitle>
+      <view class="container">
+        <WallpaperItem v-for="(item, index) in 9" :key="index" />
+      </view>
+    </view>
   </view>
 </template>
 
@@ -100,7 +112,7 @@ onReady(() => {
     .content {
       flex: 1;
 
-      uni-swiper-item {
+      .item {
         font-size: 24rpx;
         color: #666666;
       }
@@ -111,7 +123,6 @@ onReady(() => {
     width: 100%;
 
     .list {
-      margin-top: 30rpx;
       white-space: nowrap;
 
       .item {
@@ -123,6 +134,16 @@ onReady(() => {
           margin-left: 15rpx;
         }
       }
+    }
+  }
+
+  .topic {
+    width: 100%;
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15rpx;
     }
   }
 }

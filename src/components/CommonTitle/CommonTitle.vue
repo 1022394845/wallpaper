@@ -3,7 +3,7 @@ const { title } = defineProps({ title: String })
 </script>
 
 <template>
-  <view class="comment-title">
+  <view class="common-title">
     <view class="title">{{ title || '标题' }}</view>
     <view class="custom">
       <slot name="custom"></slot>
@@ -12,8 +12,8 @@ const { title } = defineProps({ title: String })
 </template>
 
 <style scoped lang="scss">
-.comment-title {
-  margin-top: 60rpx;
+.common-title {
+  margin: 60rpx 0 30rpx;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -27,6 +27,8 @@ const { title } = defineProps({ title: String })
   .custom {
     display: flex;
     align-items: center;
+    font-size: 30rpx;
+    color: #a9a9a9;
   }
 }
 </style>
