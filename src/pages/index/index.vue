@@ -41,8 +41,29 @@ onReady(() => {
           </swiper-item>
         </swiper>
       </view>
-      <uni-icons type="forward" size="16" color="#A0A0A0" />
+      <uni-icons type="forward" size="16" color="#a0a0a0" />
     </view>
+
+    <!-- 推荐 -->
+    <div class="recommend">
+      <CommentTitle title="每日推荐">
+        <template #custom>
+          <uni-icons type="calendar" size="20" color="#28b389" />
+          <view style="margin-left: 5rpx; color: #28b389">
+            <uni-dateformat :date="Date.now()" format="dd" />号
+          </view>
+        </template>
+      </CommentTitle>
+      <scroll-view class="list" scroll-x>
+        <image
+          v-for="(item, index) in 5"
+          :key="index"
+          src="@/assets/wallpaper/preview_small.webp"
+          class="item"
+          mode="scaleToFill"
+        />
+      </scroll-view>
+    </div>
   </view>
 </template>
 
@@ -82,6 +103,25 @@ onReady(() => {
       uni-swiper-item {
         font-size: 24rpx;
         color: #666666;
+      }
+    }
+  }
+
+  .recommend {
+    width: 100%;
+
+    .list {
+      margin-top: 30rpx;
+      white-space: nowrap;
+
+      .item {
+        width: 200rpx;
+        height: 445rpx;
+        border-radius: 20rpx;
+
+        &:nth-child(n + 2) {
+          margin-left: 15rpx;
+        }
       }
     }
   }
