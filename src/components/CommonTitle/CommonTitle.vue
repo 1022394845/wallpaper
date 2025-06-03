@@ -5,9 +5,7 @@ const { title } = defineProps({ title: String })
 <template>
   <view class="common-title">
     <view class="title">{{ title || '标题' }}</view>
-    <view class="custom">
-      <slot name="custom"></slot>
-    </view>
+    <slot></slot>
   </view>
 </template>
 
@@ -22,13 +20,6 @@ const { title } = defineProps({ title: String })
   .title {
     font-size: 40rpx;
     font-weight: 500;
-  }
-
-  .custom {
-    display: flex;
-    align-items: center;
-    font-size: 30rpx;
-    color: #a9a9a9;
   }
 }
 </style>

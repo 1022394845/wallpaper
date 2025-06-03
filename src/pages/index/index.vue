@@ -47,10 +47,13 @@ onReady(() => {
     <!-- 推荐 -->
     <view class="recommend">
       <CommonTitle title="每日推荐">
-        <template #custom>
-          <uni-icons type="calendar" size="20" color="#28b389" />
-          <view style="margin-left: 5rpx; color: #28b389">
-            <uni-dateformat :date="Date.now()" format="dd" />号
+        <template #default>
+          <view class="recommend-custom">
+            <uni-icons type="calendar" size="20" color="#28b389" />
+            <view class="date">
+              <uni-dateformat :date="Date.now()" format="dd" />
+              <text>号</text>
+            </view>
           </view>
         </template>
       </CommonTitle>
@@ -68,8 +71,8 @@ onReady(() => {
     <!-- 精选 -->
     <view class="topic">
       <CommonTitle title="专题精选">
-        <template #custom>
-          <view>更多+</view>
+        <template #default>
+          <view class="topic-custom">更多+</view>
         </template>
       </CommonTitle>
       <view class="container">
@@ -118,6 +121,18 @@ onReady(() => {
   .recommend {
     width: 100%;
 
+    .recommend-custom {
+      display: flex;
+      align-items: center;
+
+      .date {
+        margin-left: 5rpx;
+        display: flex;
+        align-items: center;
+        color: #28b389;
+      }
+    }
+
     .list {
       white-space: nowrap;
 
@@ -135,6 +150,11 @@ onReady(() => {
 
   .topic {
     width: 100%;
+
+    .topic-custom {
+      font-size: 30rpx;
+      color: #a9a9a9;
+    }
 
     .container {
       display: grid;
