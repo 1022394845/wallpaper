@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+const onContactCall = () => {
+  uni.makePhoneCall({
+    phoneNumber: '15280090178'
+  })
+}
+</script>
 
 <template>
   <view class="user wrapper">
@@ -12,7 +18,16 @@
     <view class="section">
       <UserOperation icon="download-filled" title="我的下载" :number="2" />
       <UserOperation icon="star-filled" title="我的评分" :number="4" />
-      <UserOperation icon="chatboxes-filled" title="联系客服" />
+      <UserOperation icon="chatboxes-filled" title="联系客服">
+        <template #default>
+          <!-- #ifdef MP -->
+          <button open-type="contact" class="mask">联系客服</button>
+          <!-- #endif -->
+          <!-- #ifndef MP -->
+          <button class="mask" @click="onContactCall">拨打电话</button>
+          <!-- #endif -->
+        </template>
+      </UserOperation>
     </view>
     <view class="section">
       <UserOperation icon="notification-filled" title="订阅更新" />
@@ -58,6 +73,16 @@
 
     .user-operation:last-child {
       border-bottom: none;
+    }
+
+    // 客服
+    .mask {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
     }
   }
 }

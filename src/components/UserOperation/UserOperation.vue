@@ -8,11 +8,13 @@ const { icon, title, number } = defineProps({ icon: String, title: String, numbe
     <view class="title">{{ title }}</view>
     <view v-if="number" class="number">{{ number }}</view>
     <uni-icons type="forward" size="15" color="#aaaaaa"></uni-icons>
+    <slot></slot>
   </view>
 </template>
 
 <style lang="scss" scoped>
 .user-operation {
+  position: relative;
   padding: 0 30rpx;
   width: 100%;
   height: 100rpx;
