@@ -54,20 +54,20 @@ const onContactCall = () => {
 
     .username {
       font-size: 44rpx;
-      color: #333333;
+      color: $wallpaper-text-color-1;
     }
 
     .location {
       margin-top: 20rpx;
       font-size: 28rpx;
-      color: #c2c2c2;
+      color: $wallpaper-text-color-3;
     }
   }
 
   .section {
     margin-top: 50rpx;
     width: 100%;
-    border: 1px solid #eeeeee;
+    border: 1px solid $wallpaper-border-color-light;
     border-radius: 10rpx;
     box-shadow: 0 0 30rpx rgba(0, 0, 0, 0.05);
     background-color: #ffffff;

@@ -32,7 +32,7 @@ onReady(() => {
 
     <!-- 公告栏 -->
     <view class="notice">
-      <uni-icons type="sound-filled" size="20" color="#28b389" />
+      <uni-icons class="sound-icon" type="sound-filled" size="20" />
       <text class="title">公告</text>
       <view class="content">
         <swiper autoplay circular vertical>
@@ -41,7 +41,7 @@ onReady(() => {
           </swiper-item>
         </swiper>
       </view>
-      <uni-icons type="forward" size="16" color="#a0a0a0" />
+      <uni-icons class="forward-icon" type="forward" size="16" />
     </view>
 
     <!-- 推荐 -->
@@ -72,7 +72,7 @@ onReady(() => {
     <view class="topic">
       <CommonTitle title="专题精选">
         <template #default>
-          <view class="topic-custom">更多+</view>
+          <view class="topic-custom">更多 +</view>
         </template>
       </CommonTitle>
       <view class="container">
@@ -100,11 +100,19 @@ onReady(() => {
     background-color: #f9f9f9;
     display: flex;
 
+    :deep(.sound-icon) {
+      color: $wallpaper-main-color !important;
+    }
+
+    :deep(.forward-icon) {
+      color: $wallpaper-text-color-3 !important;
+    }
+
     .title {
       margin-right: 40rpx;
       font-size: 28rpx;
       font-weight: 600;
-      color: #28b389;
+      color: $wallpaper-main-color;
     }
 
     .content {
@@ -113,7 +121,7 @@ onReady(() => {
 
       .item {
         font-size: 24rpx;
-        color: #666666;
+        color: $wallpaper-text-color-3;
       }
     }
   }
@@ -129,7 +137,7 @@ onReady(() => {
         margin-left: 5rpx;
         display: flex;
         align-items: center;
-        color: #28b389;
+        color: $wallpaper-main-color;
       }
     }
 
@@ -153,7 +161,7 @@ onReady(() => {
 
     .topic-custom {
       font-size: 30rpx;
-      color: #a9a9a9;
+      color: $wallpaper-text-color-3;
     }
 
     .container {

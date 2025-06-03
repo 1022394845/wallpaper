@@ -4,10 +4,10 @@ const { icon, title, number } = defineProps({ icon: String, title: String, numbe
 
 <template>
   <view class="user-operation">
-    <uni-icons :type="icon || 'info'" size="20" color="#28b389"></uni-icons>
+    <uni-icons class="item-icon" :type="icon || 'info'" size="20"></uni-icons>
     <view class="title">{{ title }}</view>
     <view v-if="number" class="number">{{ number }}</view>
-    <uni-icons type="forward" size="15" color="#aaaaaa"></uni-icons>
+    <uni-icons class="forward-icon" type="forward" size="15"></uni-icons>
     <slot></slot>
   </view>
 </template>
@@ -20,17 +20,25 @@ const { icon, title, number } = defineProps({ icon: String, title: String, numbe
   height: 100rpx;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid $wallpaper-border-color;
+
+  :deep(.item-icon) {
+    color: $wallpaper-main-color !important;
+  }
+
+  :deep(.forward-icon) {
+    color: $wallpaper-text-color-3 !important;
+  }
 
   .title {
     flex: 1;
     margin-left: 20rpx;
-    color: #666666;
+    color: $wallpaper-text-color-2;
   }
 
   .number {
     font-size: 28rpx;
-    color: #aaaaaa;
+    color: $wallpaper-text-color-3;
   }
 }
 </style>
