@@ -19,6 +19,10 @@ const openInfoPopup = () => {
 const openRatePopup = () => {
   ratePopup.value.open()
 }
+
+const goBack = () => {
+  uni.navigateBack()
+}
 </script>
 
 <template>
@@ -35,7 +39,7 @@ const openRatePopup = () => {
     </swiper>
     <!-- 信息遮罩 -->
     <view class="mask" v-show="maskVisible">
-      <view class="goback" :style="{ top: getStatusBarHeight() + 'px' }">
+      <view class="goback" :style="{ top: getStatusBarHeight() + 'px' }" @click="goBack">
         <uni-icons type="back"></uni-icons>
       </view>
       <view class="index">1/1</view>

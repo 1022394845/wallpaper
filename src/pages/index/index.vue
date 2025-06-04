@@ -16,6 +16,10 @@ const getBannerList = () => {
 onReady(() => {
   getBannerList()
 })
+
+const gopreview = url => {
+  uni.navigateTo({ url })
+}
 </script>
 
 <template>
@@ -71,6 +75,7 @@ onReady(() => {
           src="@/assets/wallpaper/preview_small.webp"
           class="item"
           mode="scaleToFill"
+          @click="gopreview('/pages/preview/index')"
         />
       </scroll-view>
     </view>

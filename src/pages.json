@@ -32,8 +32,7 @@
 		{
 			"path": "pages/classlist/index",
 			"style": {
-				"navigationBarTitleText": "分类详情",
-        "navigationStyle": "custom"
+				"navigationBarTitleText": "分类详情"
 			}
 		},
 		{

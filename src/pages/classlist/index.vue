@@ -1,8 +1,17 @@
-<script setup></script>
+<script setup>
+const gopreview = url => {
+  uni.navigateTo({ url })
+}
+</script>
 
 <template>
   <view class="classlist wrapper">
-    <view v-for="(item, index) in 10" :key="index" class="item">
+    <view
+      v-for="(item, index) in 10"
+      :key="index"
+      class="item"
+      @click="gopreview('/pages/preview/index')"
+    >
       <image class="image" src="@/assets/wallpaper/preview1.jpg" mode="scaleToFill" />
     </view>
   </view>
