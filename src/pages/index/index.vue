@@ -1,4 +1,9 @@
 <script setup>
+defineOptions({
+  options: {
+    styleIsolation: 'shared' // 允许样式穿透（微信小程序）
+  }
+})
 // banner图列表
 const bannerList = ref([])
 const getBannerList = () => {
@@ -51,7 +56,7 @@ onReady(() => {
       <CommonTitle title="每日推荐">
         <template #default>
           <view class="recommend-custom">
-            <uni-icons class="icon" type="calendar" />
+            <uni-icons class="calendar-icon" type="calendar" />
             <view class="date">
               <uni-dateformat :date="Date.now()" format="dd" />
               <text>号</text>
@@ -104,12 +109,14 @@ onReady(() => {
     background-color: #f9f9f9;
     display: flex;
 
-    :deep(.sound-icon) {
+    :deep(.sound-icon .uni-icons),
+    :deep(.sound-icon.uni-icons) {
       font-size: 40rpx !important;
       color: $wallpaper-main-color !important;
     }
 
-    :deep(.forward-icon) {
+    :deep(.forward-icon .uni-icons),
+    :deep(.forward-icon.uni-icons) {
       font-size: 30rpx !important;
       color: $wallpaper-text-color-3 !important;
     }
@@ -139,7 +146,8 @@ onReady(() => {
       display: flex;
       align-items: center;
 
-      :deep(.icon) {
+      :deep(.calendar-icon .uni-icons),
+      :deep(.calendar-icon.uni-icons) {
         font-size: 35rpx !important;
         color: $wallpaper-main-color !important;
       }

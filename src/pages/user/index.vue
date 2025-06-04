@@ -79,6 +79,18 @@ const onContactCall = () => {
     box-shadow: 0 0 30rpx rgba(0, 0, 0, 0.05);
     background-color: #ffffff;
 
+    :deep(.item-icon .uni-icons),
+    :deep(.item-icon.uni-icons) {
+      font-size: 35rpx !important;
+      color: $wallpaper-main-color !important;
+    }
+
+    :deep(.forward-icon .uni-icons),
+    :deep(.forward-icon.uni-icons) {
+      font-size: 30rpx !important;
+      color: $wallpaper-text-color-3 !important;
+    }
+
     .user-operation:last-child {
       border-bottom: none;
     }

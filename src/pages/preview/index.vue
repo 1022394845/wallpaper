@@ -1,6 +1,7 @@
 <script setup>
 import InfoPopup from './componenets/InfoPopup.vue'
 import RatePopup from './componenets/RatePopup.vue'
+import { getStatusBarHeight } from '@/utils/system'
 
 // 遮罩层显示
 const maskVisible = ref(true)
@@ -22,8 +23,8 @@ const openRatePopup = () => {
 
 <template>
   <view class="preview">
-    <swiper circular>
-      <swiper-item v-for="(item, index) in 5" :key="index">
+    <swiper circular class="container">
+      <swiper-item class="item" v-for="(item, index) in 5" :key="index">
         <image
           class="image"
           src="@/assets/wallpaper/preview1.jpg"
@@ -34,7 +35,9 @@ const openRatePopup = () => {
     </swiper>
     <!-- 信息遮罩 -->
     <view class="mask" v-show="maskVisible">
-      <view class="goback"></view>
+      <view class="goback" :style="{ top: getStatusBarHeight() + 'px' }">
+        <uni-icons type="back"></uni-icons>
+      </view>
       <view class="index">1/1</view>
       <view class="time">
         <uni-dateformat :date="Date.now()" format="hh:mm"></uni-dateformat>
@@ -70,6 +73,16 @@ const openRatePopup = () => {
   width: 100vw;
   height: 100vh;
 
+  .container {
+    width: 100%;
+    height: 100%;
+
+    .item {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   .mask {
     position: absolute;
     left: 0;
@@ -82,6 +95,28 @@ const openRatePopup = () => {
     color: $wallpaper-text-color-5;
     text-align: center;
     pointer-events: none;
+
+    .goback {
+      position: absolute;
+      top: 0;
+      left: 30rpx;
+      margin-top: 10rpx;
+      width: 70rpx;
+      height: 70rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10rpx);
+      border: 1px solid $wallpaper-border-color;
+      border-radius: 50%;
+      pointer-events: all;
+
+      :deep(.uni-icons) {
+        font-size: 42rpx !important;
+        color: $wallpaper-text-color-5 !important;
+      }
+    }
 
     .index {
       margin: 0 auto;
@@ -126,12 +161,13 @@ const openRatePopup = () => {
       backdrop-filter: blur(20rpx);
       pointer-events: all;
 
-      :deep(.icon) {
+      :deep(.uni-icons) {
         font-size: 45rpx !important;
+      }
 
-        &.download {
-          font-size: 40rpx !important;
-        }
+      :deep(.download .uni-icons),
+      :deep(.download.uni-icons) {
+        font-size: 38rpx !important;
       }
     }
   }

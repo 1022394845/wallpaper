@@ -32,7 +32,7 @@ const goNav = () => {
   </view>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .user-operation {
   position: relative;
   padding: 0 30rpx;
@@ -41,16 +41,6 @@ const goNav = () => {
   display: flex;
   align-items: center;
   border-bottom: 1px solid $wallpaper-border-color;
-
-  :deep(.item-icon) {
-    font-size: 45rpx !important;
-    color: $wallpaper-main-color !important;
-  }
-
-  :deep(.forward-icon) {
-    font-size: 30rpx !important;
-    color: $wallpaper-text-color-3 !important;
-  }
 
   .title {
     flex: 1;

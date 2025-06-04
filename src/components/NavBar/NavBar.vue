@@ -9,7 +9,7 @@ const { title } = defineProps({ title: String })
     <view class="container">
       <view class="status-bar" :style="{ height: getStatusBarHeight() + 'px' }"></view>
       <view class="title-bar" :style="{ height: getTitleBarHeight() + 'px' }">
-        <view class="title">{{ title }}</view>
+        <view class="title">{{ title || '壁纸' }}</view>
         <view class="search">
           <uni-icons type="search"></uni-icons>
           <text>搜索</text>
