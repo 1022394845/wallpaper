@@ -16,7 +16,13 @@ const onContactCall = () => {
       <view class="location">来自：福州</view>
     </view>
     <view class="section">
-      <UserOperation icon="download-filled" title="我的下载" :number="2" />
+      <UserOperation
+        icon="download-filled"
+        title="我的下载"
+        :number="2"
+        url="/pages/classlist/index"
+        openType="navigate"
+      />
       <UserOperation icon="star-filled" title="我的评分" :number="4" />
       <UserOperation icon="chatboxes-filled" title="联系客服">
         <template #default>

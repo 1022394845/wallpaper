@@ -72,11 +72,13 @@ onReady(() => {
     <view class="topic">
       <CommonTitle title="专题精选">
         <template #default>
-          <view class="topic-custom">更多 +</view>
+          <navigator class="topic-custom" url="/pages/category/index" open-type="switchTab">
+            更多 +
+          </navigator>
         </template>
       </CommonTitle>
       <view class="container">
-        <WallpaperItem v-for="(item, index) in 9" :key="index" />
+        <CategoryItem v-for="(item, index) in 9" :key="index" />
       </view>
     </view>
   </view>

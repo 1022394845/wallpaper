@@ -3,8 +3,8 @@ const { name, date } = defineProps({ name: String, date: String })
 </script>
 
 <template>
-  <view class="wallpaper-item">
-    <navigator class="container" url="">
+  <view class="category-item">
+    <navigator class="container" url="/pages/classlist/index" open-type="navigate">
       <image class="image" src="@/assets/wallpaper/classify1.jpg" mode="scaleToFill" />
       <view class="update">{{ date || '不久' }}前更新</view>
       <view class="name">{{ name || '默认专题' }}</view>
@@ -13,7 +13,7 @@ const { name, date } = defineProps({ name: String, date: String })
 </template>
 
 <style lang="scss" scoped>
-.wallpaper-item {
+.category-item {
   width: 100%;
   height: 350rpx;
   border-radius: 10rpx;

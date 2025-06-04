@@ -1,9 +1,29 @@
 <script setup>
-const { icon, title, number } = defineProps({ icon: String, title: String, number: Number })
+const { icon, title, number, url, openType } = defineProps({
+  icon: String,
+  title: String,
+  number: Number,
+  url: String,
+  openType: String
+})
+
+const goNav = () => {
+  if (!url) return
+  switch (openType) {
+    case 'navigate':
+      uni.navigateTo({ url })
+      break
+    case 'switchTab':
+      uni.switchTab({ url })
+      break
+    default:
+      break
+  }
+}
 </script>
 
 <template>
-  <view class="user-operation">
+  <view class="user-operation" @click="goNav">
     <uni-icons class="item-icon" :type="icon || 'info'" size="20"></uni-icons>
     <view class="title">{{ title }}</view>
     <view v-if="number" class="number">{{ number }}</view>

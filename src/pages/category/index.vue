@@ -2,7 +2,7 @@
 
 <template>
   <view class="category wrapper">
-    <WallpaperItem v-for="(item, index) in 12" :key="index" />
+    <CategoryItem v-for="(item, index) in 12" :key="index" />
   </view>
 </template>
 
