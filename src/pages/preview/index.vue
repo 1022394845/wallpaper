@@ -1,5 +1,6 @@
 <script setup>
 import InfoPopup from './componenets/InfoPopup.vue'
+import RatePopup from './componenets/RatePopup.vue'
 
 // 遮罩层显示
 const maskVisible = ref(true)
@@ -9,8 +10,13 @@ const toggleMaskVisible = () => {
 
 // popup
 const infoPopup = ref()
+const ratePopup = ref()
+
 const openInfoPopup = () => {
   infoPopup.value.open()
+}
+const openRatePopup = () => {
+  ratePopup.value.open()
 }
 </script>
 
@@ -41,7 +47,7 @@ const openInfoPopup = () => {
           <uni-icons class="icon" type="info"></uni-icons>
           <view class="text">信息</view>
         </view>
-        <view class="item">
+        <view class="item" @click="openRatePopup">
           <uni-icons class="icon" type="star"></uni-icons>
           <view class="text">评分</view>
         </view>
@@ -53,6 +59,8 @@ const openInfoPopup = () => {
     </view>
     <!-- 信息popup -->
     <InfoPopup ref="infoPopup" />
+    <!-- 评分popup -->
+    <RatePopup ref="ratePopup" />
   </view>
 </template>
 
@@ -110,6 +118,7 @@ const openInfoPopup = () => {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 32rpx;
       color: $wallpaper-text-color-2;
       border-radius: 60rpx;
       background-color: rgba(255, 255, 255, 0.8);
