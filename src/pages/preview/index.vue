@@ -1,8 +1,16 @@
 <script setup>
+import InfoPopup from './componenets/InfoPopup.vue'
+
 // 遮罩层显示
 const maskVisible = ref(true)
 const toggleMaskVisible = () => {
   maskVisible.value = !maskVisible.value
+}
+
+// popup
+const infoPopup = ref()
+const openInfoPopup = () => {
+  infoPopup.value.open()
 }
 </script>
 
@@ -18,6 +26,7 @@ const toggleMaskVisible = () => {
         />
       </swiper-item>
     </swiper>
+    <!-- 信息遮罩 -->
     <view class="mask" v-show="maskVisible">
       <view class="goback"></view>
       <view class="index">1/1</view>
@@ -28,7 +37,7 @@ const toggleMaskVisible = () => {
         <uni-dateformat :date="Date.now()" format="MM月dd日"></uni-dateformat>
       </view>
       <view class="footer">
-        <view class="item">
+        <view class="item" @click="openInfoPopup">
           <uni-icons class="icon" type="info"></uni-icons>
           <view class="text">信息</view>
         </view>
@@ -37,11 +46,13 @@ const toggleMaskVisible = () => {
           <view class="text">评分</view>
         </view>
         <view class="item">
-          <uni-icons class="icon" type="download"></uni-icons>
+          <uni-icons class="icon download" type="download"></uni-icons>
           <view class="text">下载</view>
         </view>
       </view>
     </view>
+    <!-- 信息popup -->
+    <InfoPopup ref="infoPopup" />
   </view>
 </template>
 
@@ -108,6 +119,10 @@ const toggleMaskVisible = () => {
 
       :deep(.icon) {
         font-size: 45rpx !important;
+
+        &.download {
+          font-size: 40rpx !important;
+        }
       }
     }
   }
