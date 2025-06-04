@@ -15,6 +15,8 @@ onReady(() => {
 
 <template>
   <view class="home-page wrapper">
+    <NavBar title="推荐" />
+
     <!-- 轮播图 -->
     <view class="banner">
       <swiper

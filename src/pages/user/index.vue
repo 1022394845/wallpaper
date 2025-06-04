@@ -8,6 +8,7 @@ const onContactCall = () => {
 
 <template>
   <view class="user wrapper">
+    <NavBar title="我的" />
     <view class="user-info">
       <view class="avatar">
         <image class="image" src="@/static/logo.png" mode="scaleToFill" />
