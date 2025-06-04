@@ -24,10 +24,10 @@ const goNav = () => {
 
 <template>
   <view class="user-operation" @click="goNav">
-    <uni-icons class="item-icon" :type="icon || 'info'" size="20"></uni-icons>
+    <uni-icons class="item-icon" :type="icon || 'info'"></uni-icons>
     <view class="title">{{ title }}</view>
     <view v-if="number" class="number">{{ number }}</view>
-    <uni-icons class="forward-icon" type="forward" size="15"></uni-icons>
+    <uni-icons class="forward-icon" type="forward"></uni-icons>
     <slot></slot>
   </view>
 </template>
@@ -43,10 +43,12 @@ const goNav = () => {
   border-bottom: 1px solid $wallpaper-border-color;
 
   :deep(.item-icon) {
+    font-size: 45rpx !important;
     color: $wallpaper-main-color !important;
   }
 
   :deep(.forward-icon) {
+    font-size: 30rpx !important;
     color: $wallpaper-text-color-3 !important;
   }
 

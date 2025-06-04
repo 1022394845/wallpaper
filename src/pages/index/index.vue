@@ -32,7 +32,7 @@ onReady(() => {
 
     <!-- 公告栏 -->
     <view class="notice">
-      <uni-icons class="sound-icon" type="sound-filled" size="20" />
+      <uni-icons class="sound-icon" type="sound-filled" />
       <text class="title">公告</text>
       <view class="content">
         <swiper autoplay circular vertical>
@@ -41,7 +41,7 @@ onReady(() => {
           </swiper-item>
         </swiper>
       </view>
-      <uni-icons class="forward-icon" type="forward" size="16" />
+      <uni-icons class="forward-icon" type="forward" />
     </view>
 
     <!-- 推荐 -->
@@ -49,7 +49,7 @@ onReady(() => {
       <CommonTitle title="每日推荐">
         <template #default>
           <view class="recommend-custom">
-            <uni-icons type="calendar" size="20" color="#28b389" />
+            <uni-icons class="icon" type="calendar" />
             <view class="date">
               <uni-dateformat :date="Date.now()" format="dd" />
               <text>号</text>
@@ -103,10 +103,12 @@ onReady(() => {
     display: flex;
 
     :deep(.sound-icon) {
+      font-size: 40rpx !important;
       color: $wallpaper-main-color !important;
     }
 
     :deep(.forward-icon) {
+      font-size: 30rpx !important;
       color: $wallpaper-text-color-3 !important;
     }
 
@@ -134,6 +136,11 @@ onReady(() => {
     .recommend-custom {
       display: flex;
       align-items: center;
+
+      :deep(.icon) {
+        font-size: 35rpx !important;
+        color: $wallpaper-main-color !important;
+      }
 
       .date {
         margin-left: 5rpx;
