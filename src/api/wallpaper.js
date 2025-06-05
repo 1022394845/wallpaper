@@ -19,3 +19,6 @@ export const getCategoryDetailAPI = (classid, pageInfo) =>
 // 壁纸评分
 export const setupScoreAPI = (classid, wallId, userScore) =>
   request({ url: '/setupScore', data: { classid, wallId, userScore } })
+
+// 获取单张壁纸详情
+export const getWallpaperDetailAPI = id => request({ url: '/detailWall', data: { id } })

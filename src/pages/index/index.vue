@@ -37,8 +37,8 @@ onLoad(() => {
   getCategoryList()
 })
 
-const goPreview = () => {
-  uni.navigateTo({ url: '/pages/preview/index' })
+const goPreview = id => {
+  uni.navigateTo({ url: `/pages/preview/index?id=${id}&single=true` })
 }
 
 const goNotice = id => {
@@ -104,7 +104,7 @@ const goNotice = id => {
           :src="item.smallPicurl"
           class="item"
           mode="scaleToFill"
-          @click="goPreview"
+          @click="goPreview(item._id)"
         />
       </scroll-view>
     </view>

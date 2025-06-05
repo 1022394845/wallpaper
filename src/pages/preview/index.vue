@@ -1,4 +1,5 @@
 <script setup>
+import { getWallpaperDetailAPI } from '@/api/wallpaper'
 import InfoPopup from './componenets/InfoPopup.vue'
 import RatePopup from './componenets/RatePopup.vue'
 import { getStatusBarHeight } from '@/utils/system'
@@ -6,11 +7,17 @@ import { getStatusBarHeight } from '@/utils/system'
 const currentId = ref(null)
 const currentIndex = ref(0)
 const classList = ref([])
-onLoad(e => {
-  const storageClassList = uni.getStorageSync('wallpaper_ClassList') || []
+
+onLoad(async e => {
   currentId.value = e.id
-  currentIndex.value = storageClassList.findIndex(item => item._id === currentId.value)
-  classList.value = storageClassList.map(item => {
+  if (e.single) {
+    const { data } = await getWallpaperDetailAPI(e.id)
+    classList.value = data
+  } else {
+    classList.value = uni.getStorageSync('wallpaper_ClassList') || []
+    currentIndex.value = classList.value.findIndex(item => item._id === currentId.value)
+  }
+  classList.value = classList.value.map(item => {
     return {
       ...item,
       picurl: item.smallPicurl.replace('_small.webp', '.jpg')
@@ -81,7 +88,7 @@ const goBack = () => {
         </view>
         <view class="item" @click="openRatePopup">
           <uni-icons class="icon" type="star"></uni-icons>
-          <view class="text">{{ currentInfo.score || '评分' }}</view>
+          <view class="text">{{ currentInfo?.score || '评分' }}</view>
         </view>
         <view class="item">
           <uni-icons class="icon download" type="download"></uni-icons>
