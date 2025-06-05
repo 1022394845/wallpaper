@@ -12,21 +12,21 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "推荐",
-        "navigationStyle": "custom"
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/category/index",
 			"style": {
 				"navigationBarTitleText": "分类",
-        "navigationStyle": "custom"
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "我的",
-        "navigationStyle": "custom"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -39,7 +39,13 @@
 			"path": "pages/preview/index",
 			"style": {
 				"navigationBarTitleText": "预览",
-        "navigationStyle": "custom"
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/notice/index",
+			"style": {
+				"navigationBarTitleText": "公告"
 			}
 		}
 	],

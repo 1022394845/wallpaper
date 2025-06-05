@@ -1,8 +1,8 @@
 <script setup>
 const { name, date } = defineProps({ name: String, date: String })
 
-const goDetail = url => {
-  uni.navigateTo({ url })
+const goDetail = () => {
+  uni.navigateTo({ url: '/pages/classlist/index' })
 }
 </script>
 
@@ -12,7 +12,7 @@ const goDetail = url => {
       class="image"
       src="@/assets/wallpaper/classify1.jpg"
       mode="scaleToFill"
-      @click="goDetail('/pages/classlist/index')"
+      @click="goDetail"
     />
     <view class="update">{{ date || '不久' }}前更新</view>
     <view class="name">{{ name || '默认专题' }}</view>

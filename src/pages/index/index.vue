@@ -17,8 +17,12 @@ onReady(() => {
   getBannerList()
 })
 
-const gopreview = url => {
-  uni.navigateTo({ url })
+const goPreview = () => {
+  uni.navigateTo({ url: '/pages/preview/index' })
+}
+
+const goNotice = () => {
+  uni.navigateTo({ url: '/pages/notice/index' })
 }
 </script>
 
@@ -47,7 +51,12 @@ const gopreview = url => {
       <text class="title">公告</text>
       <view class="content">
         <swiper autoplay circular vertical>
-          <swiper-item class="item ellipsis" v-for="(item, index) in 3" :key="index">
+          <swiper-item
+            class="item ellipsis"
+            v-for="(item, index) in 3"
+            :key="index"
+            @click="goNotice"
+          >
             公告内容
           </swiper-item>
         </swiper>
@@ -75,7 +84,7 @@ const gopreview = url => {
           src="@/assets/wallpaper/preview_small.webp"
           class="item"
           mode="scaleToFill"
-          @click="gopreview('/pages/preview/index')"
+          @click="goPreview"
         />
       </scroll-view>
     </view>
