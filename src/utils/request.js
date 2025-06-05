@@ -1,48 +1,50 @@
-import axios from 'axios'
-
+// 网络请求
 const baseURL = 'https://tea.qingnian8.com/api/bizhi' // 基地址
+const timeout = 10000 // 连接超时上限
 
-const request = axios.create({
-  baseURL,
-  timeout: 10000, // 连接超时时间
-  headers: {
+const request = params => {
+  const { url, method = 'GET', data = {} } = params
+  const header = {
     'Content-Type': 'application/json',
     'access-key': '1022394845'
   }
-})
+  if (method === 'POST') header['Content-Type'] = 'multipart/form-data'
 
-// 添加请求拦截器
-request.interceptors.request.use(
-  config => {
-    // 发送请求之前
-    return config
-  },
-  error => {
-    // 对请求错误处理
-    return Promise.reject(error)
-  }
-)
-
-// 添加响应拦截器
-request.interceptors.response.use(
-  response => {
-    // 摘取核心响应数据
-    if (response.data?.errCode === 0) {
-      return response.data
-    }
-    // 处理业务失败
-    uni.showModal({
-      title: '发生错误',
-      content: response.data?.errMsg || '服务异常',
-      showCancel: false,
-      confirmColor: '#28b389'
+  return new Promise((resolve, reject) => {
+    uni.request({
+      url: baseURL + url,
+      method,
+      header,
+      data,
+      timeout,
+      success: response => {
+        if (response.data?.errCode === 0) resolve(response.data)
+        else {
+          if (response.data?.errCode === 4000) {
+            uni.showModal({
+              title: '错误提示',
+              content: response.data?.errMsg || '未知错误',
+              showCancel: false,
+              confirmColor: '#28b389'
+            })
+          } else {
+            uni.showToast({
+              title: response.data?.errMsg || '未知错误',
+              icon: 'none'
+            })
+          }
+          reject(response.data)
+        }
+      },
+      fail: err => {
+        uni.showToast({
+          title: '未知异常',
+          icon: 'error'
+        })
+        reject(err)
+      }
     })
-    return Promise.reject(response.data)
-  },
-  error => {
-    return Promise.reject(error)
-  }
-)
+  })
+}
 
 export default request
-export { baseURL }

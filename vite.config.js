@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import uni from '@dcloudio/vite-plugin-uni'
-import { resolve } from 'path'
+import { fileURLToPath, URL } from 'node:url'
 
 // 自动引入
 import AutoImport from 'unplugin-auto-import/vite'
@@ -15,7 +15,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   css: {
