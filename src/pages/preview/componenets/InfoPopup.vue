@@ -7,6 +7,8 @@ const close = () => {
   popup.value.close()
 }
 defineExpose({ open, close })
+
+const { detail } = defineProps({ detail: Object })
 </script>
 
 <template>
@@ -19,30 +21,29 @@ defineExpose({ open, close })
       <scroll-view scroll-y class="content">
         <view class="item">
           <view class="label">壁纸ID</view>
-          <text class="detail" selectable>fn234jn2kcdjncdksj</text>
+          <text class="detail" selectable>{{ detail._id }}</text>
         </view>
         <view class="item">
           <view class="label">发布者</view>
-          <text class="detail" selectable>酒笙清梅</text>
+          <text class="detail" selectable>{{ detail.nickname }}</text>
         </view>
-        <view class="item">
+        <view class="item rate">
           <view class="label">评分</view>
-          <uni-rate :value="5" readonly />
+          <uni-rate :value="detail.score" readonly />
+          <text class="score">{{ detail.score }}分</text>
         </view>
         <view class="item abstract">
           <view class="label">摘要</view>
-          <text class="detail" selectable>
-            这是一张精美的壁纸，这是一张精美的壁纸，这是一张精美的壁纸，这是一张精美的壁纸，这是一张精美的壁纸，这是一张精美的壁纸。
-          </text>
+          <text class="detail" selectable>{{ detail.description }}</text>
         </view>
-        <view class="item">
+        <view class="item tags">
           <view class="label">标签</view>
           <view class="tag-list">
-            <view class="tag" v-for="(item, index) in 3" :key="index">标签</view>
+            <view class="tag" v-for="(item, index) in detail.tabs" :key="index">{{ item }}</view>
           </view>
         </view>
         <view class="copyright">
-          声明：本壁纸来自网络收集或用户投稿，非商业使用，仅供免费学习交流。若侵犯了您的权益，请联系客服或平台邮箱：
+          声明：本壁纸来自网络收集或用户投稿，非商业使用，仅供免费学习交流。若侵犯了您的权益，请联系客服或平台邮箱
           <text selectable>1022394845@qq.com</text>
           删除。
         </view>
@@ -97,19 +98,33 @@ defineExpose({ open, close })
         align-items: flex-start;
       }
 
-      .tag-list {
-        display: flex;
-        align-items: center;
+      &.rate {
+        .score {
+          margin-left: 20rpx;
+          color: $wallpaper-text-color-3;
+        }
+      }
 
-        .tag {
-          margin: 0 10rpx;
-          padding: 0 30rpx;
-          height: 40rpx;
-          line-height: 40rpx;
-          font-size: 22rpx;
-          color: $wallpaper-main-color;
-          border: 1px solid $wallpaper-main-color;
-          border-radius: 20rpx;
+      &.tags {
+        align-items: flex-start;
+
+        .tag-list {
+          margin: auto 0;
+          display: flex;
+          align-items: center;
+
+          .tag {
+            margin: 0 10rpx;
+            padding: 0 10rpx;
+            height: 40rpx;
+            display: flex;
+            align-items: center;
+            font-size: 22rpx;
+            color: $wallpaper-main-color;
+            border: 1px solid $wallpaper-main-color;
+            border-radius: 20rpx;
+            box-sizing: border-box;
+          }
         }
       }
     }

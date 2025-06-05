@@ -1,21 +1,19 @@
 <script setup>
-const { name, date } = defineProps({ name: String, date: String })
+const { detail } = defineProps({ detail: Object })
 
 const goDetail = () => {
-  uni.navigateTo({ url: '/pages/classlist/index' })
+  uni.navigateTo({ url: `/pages/classlist/index?classid=${detail._id}&name=${detail.name}` })
 }
 </script>
 
 <template>
   <view class="category-item">
-    <image
-      class="image"
-      src="@/assets/wallpaper/classify1.jpg"
-      mode="scaleToFill"
-      @click="goDetail"
-    />
-    <view class="update">{{ date || '不久' }}前更新</view>
-    <view class="name">{{ name || '默认专题' }}</view>
+    <image class="image" :src="detail.picurl" mode="scaleToFill" @click="goDetail" />
+    <view class="update">
+      <uni-dateformat :date="detail.updateTime" :threshold="[3e5]"></uni-dateformat>
+      更新
+    </view>
+    <view class="name">{{ detail.name || '默认专题' }}</view>
   </view>
 </template>
 

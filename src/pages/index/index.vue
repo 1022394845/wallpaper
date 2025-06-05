@@ -1,28 +1,48 @@
 <script setup>
-defineOptions({
-  options: {
-    styleIsolation: 'shared' // 允许样式穿透（微信小程序）
-  }
-})
+import { getBannerListAPI, getDayRecommendAPI, getCategoryListAPI } from '@/api/wallpaper'
+import { getNoticeListAPI } from '@/api/notice'
+
 // banner图列表
 const bannerList = ref([])
-const getBannerList = () => {
-  const bannerImages = import.meta.glob('/src/assets/wallpaper/banner*.jpg', {
-    eager: true, // 立即导入所有匹配的模块
-    import: 'default' // 获取默认导出（即图片 URL）
-  })
-  bannerList.value = Object.values(bannerImages)
+const getBannerList = async () => {
+  const { data } = await getBannerListAPI()
+  bannerList.value = data
 }
-onReady(() => {
+
+// 公告列表
+const noticeList = ref([])
+const getNoticeList = async () => {
+  const { data } = await getNoticeListAPI()
+  noticeList.value = data
+}
+
+// 每日推荐
+const dayRecommend = ref([])
+const getDayRecommend = async () => {
+  const { data } = await getDayRecommendAPI()
+  dayRecommend.value = data
+}
+
+// 分类列表
+const categoryList = ref([])
+const getCategoryList = async () => {
+  const { data } = await getCategoryListAPI()
+  categoryList.value = data
+}
+
+onLoad(() => {
   getBannerList()
+  getNoticeList()
+  getDayRecommend()
+  getCategoryList()
 })
 
 const goPreview = () => {
   uni.navigateTo({ url: '/pages/preview/index' })
 }
 
-const goNotice = () => {
-  uni.navigateTo({ url: '/pages/notice/index' })
+const goNotice = id => {
+  uni.navigateTo({ url: `/pages/notice/index?id=${id}` })
 }
 </script>
 
@@ -39,8 +59,8 @@ const goNotice = () => {
         indicator-color="rgba(255,255,255,0.5)"
         indicator-active-color="#ffffff"
       >
-        <swiper-item v-for="(banner, index) in bannerList" :key="index">
-          <image class="image" :src="banner" mode="scaleToFill" />
+        <swiper-item v-for="item in bannerList" :key="item._id">
+          <image class="image" :src="item.picurl" mode="scaleToFill" />
         </swiper-item>
       </swiper>
     </view>
@@ -53,11 +73,11 @@ const goNotice = () => {
         <swiper autoplay circular vertical>
           <swiper-item
             class="item ellipsis"
-            v-for="(item, index) in 3"
-            :key="index"
-            @click="goNotice"
+            v-for="item in noticeList"
+            :key="item._id"
+            @click="goNotice(item._id)"
           >
-            公告内容
+            {{ item.title }}
           </swiper-item>
         </swiper>
       </view>
@@ -79,9 +99,9 @@ const goNotice = () => {
       </CommonTitle>
       <scroll-view class="list" scroll-x>
         <image
-          v-for="(item, index) in 5"
-          :key="index"
-          src="@/assets/wallpaper/preview_small.webp"
+          v-for="item in dayRecommend"
+          :key="item._id"
+          :src="item.smallPicurl"
           class="item"
           mode="scaleToFill"
           @click="goPreview"
@@ -99,7 +119,7 @@ const goNotice = () => {
         </template>
       </CommonTitle>
       <view class="container">
-        <CategoryItem v-for="(item, index) in 9" :key="index" />
+        <CategoryItem v-for="item in categoryList" :key="item._id" :detail="item" />
       </view>
     </view>
   </view>

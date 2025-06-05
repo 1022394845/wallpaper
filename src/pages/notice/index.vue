@@ -1,15 +1,27 @@
-<script setup></script>
+<script setup>
+import { getNoticeDetailAPI } from '@/api/notice'
+
+const detail = ref({})
+const getNoticeDetail = async id => {
+  const { data } = await getNoticeDetailAPI(id)
+  detail.value = data
+}
+
+onLoad(async e => {
+  getNoticeDetail(e.id)
+})
+</script>
 
 <template>
   <view class="notice wrapper">
-    <view class="title">标题</view>
+    <view class="title">{{ detail.title }}</view>
     <view class="info">
-      <view class="item">管理员</view>
+      <view class="item">{{ detail.author }}</view>
       <view class="item">
-        <uni-dateformat :date="Date.now()" format="yyyy-MM-dd hh:mm:ss"></uni-dateformat>
+        <uni-dateformat :date="detail.publish_date" format="yyyy-MM-dd hh:mm:ss"></uni-dateformat>
       </view>
     </view>
-    <view class="content">公告内容</view>
+    <view class="content" v-html="detail.content"></view>
   </view>
 </template>
 

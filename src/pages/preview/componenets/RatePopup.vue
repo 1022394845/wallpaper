@@ -1,7 +1,12 @@
 <script setup>
+import { setupScoreAPI } from '@/api/wallpaper'
+
+const { detail } = defineProps({ detail: Object })
+const rateValue = ref(0)
+
 const popup = ref()
 const open = () => {
-  rateValue.value = 0
+  rateValue.value = detail.userScore || 0
   popup.value.open()
 }
 const close = () => {
@@ -9,10 +14,16 @@ const close = () => {
 }
 defineExpose({ open, close })
 
-const rateValue = ref(0)
-
-const submit = () => {
+const emit = defineEmits(['success'])
+const submit = async () => {
+  await setupScoreAPI(detail.classid, detail._id, rateValue.value)
   close()
+  uni.showToast({
+    title: '评分成功',
+    icon: 'none'
+  })
+  // 缓存评分状态
+  emit('success', rateValue.value)
 }
 </script>
 
@@ -20,13 +31,20 @@ const submit = () => {
   <uni-popup ref="popup" type="center">
     <view class="popup-container">
       <view class="header">
-        <view class="title">壁纸评分</view>
+        <view class="title">{{ detail.userScore ? '您已经评分过了' : '壁纸评分' }}</view>
         <uni-icons class="close" type="closeempty" @click="close"></uni-icons>
       </view>
       <view class="content">
-        <uni-rate v-model="rateValue" />
+        <uni-rate v-model="rateValue" :readonly="detail.userScore" />
       </view>
-      <button type="default" plain class="submit-btn" :disabled="!rateValue" @click="submit">
+      <button
+        type="default"
+        plain
+        class="submit-btn"
+        v-if="!detail.userScore"
+        :disabled="!rateValue"
+        @click="submit"
+      >
         确认评分
       </button>
     </view>

@@ -42,7 +42,9 @@ export default defineConfig([
       ],
       'vue/no-setup-props-destructure': ['off'], // 关闭 props 解构的校验
       // 💡 添加未定义变量错误提示，create-vue@3.6.3 关闭
-      'no-undef': 'off'
+      'no-undef': 'off',
+      'vue/no-v-html': 'off', // 关闭v-html警告
+      'vue/no-v-text-v-html-on-component': 'off'
     }
   }
 ])

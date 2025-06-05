@@ -3,6 +3,30 @@ import InfoPopup from './componenets/InfoPopup.vue'
 import RatePopup from './componenets/RatePopup.vue'
 import { getStatusBarHeight } from '@/utils/system'
 
+const currentId = ref(null)
+const currentIndex = ref(0)
+const classList = ref([])
+onLoad(e => {
+  const storageClassList = uni.getStorageSync('wallpaper_ClassList') || []
+  currentId.value = e.id
+  currentIndex.value = storageClassList.findIndex(item => item._id === currentId.value)
+  classList.value = storageClassList.map(item => {
+    return {
+      ...item,
+      picurl: item.smallPicurl.replace('_small.webp', '.jpg')
+    }
+  })
+})
+
+// 滑动更改index
+const swiperChange = e => {
+  currentIndex.value = e.detail.current
+}
+
+const currentInfo = computed(() => {
+  return classList.value[currentIndex.value]
+})
+
 // 遮罩层显示
 const maskVisible = ref(true)
 const toggleMaskVisible = () => {
@@ -20,6 +44,12 @@ const openRatePopup = () => {
   ratePopup.value.open()
 }
 
+// 缓存评分状态
+const saveRateStatus = score => {
+  classList.value[currentIndex.value].userScore = score
+  uni.setStorageSync('wallpaper-ClassList', classList.value)
+}
+
 const goBack = () => {
   uni.navigateBack()
 }
@@ -27,14 +57,9 @@ const goBack = () => {
 
 <template>
   <view class="preview">
-    <swiper circular class="container">
-      <swiper-item class="item" v-for="(item, index) in 5" :key="index">
-        <image
-          class="image"
-          src="@/assets/wallpaper/preview1.jpg"
-          mode="scaleToFill"
-          @click="toggleMaskVisible"
-        />
+    <swiper circular :current="currentIndex" class="container" @change="swiperChange">
+      <swiper-item class="item" v-for="item in classList" :key="item._id">
+        <image class="image" :src="item.picurl" mode="scaleToFill" @click="toggleMaskVisible" />
       </swiper-item>
     </swiper>
     <!-- 信息遮罩 -->
@@ -42,7 +67,7 @@ const goBack = () => {
       <view class="goback" :style="{ top: getStatusBarHeight() + 'px' }" @click="goBack">
         <uni-icons type="back"></uni-icons>
       </view>
-      <view class="index">1/1</view>
+      <view class="index">{{ currentIndex + 1 }} / {{ classList.length }}</view>
       <view class="time">
         <uni-dateformat :date="Date.now()" format="hh:mm"></uni-dateformat>
       </view>
@@ -56,7 +81,7 @@ const goBack = () => {
         </view>
         <view class="item" @click="openRatePopup">
           <uni-icons class="icon" type="star"></uni-icons>
-          <view class="text">评分</view>
+          <view class="text">{{ currentInfo.score || '评分' }}</view>
         </view>
         <view class="item">
           <uni-icons class="icon download" type="download"></uni-icons>
@@ -65,9 +90,9 @@ const goBack = () => {
       </view>
     </view>
     <!-- 信息popup -->
-    <InfoPopup ref="infoPopup" />
+    <InfoPopup ref="infoPopup" :detail="currentInfo" />
     <!-- 评分popup -->
-    <RatePopup ref="ratePopup" />
+    <RatePopup ref="ratePopup" :detail="currentInfo" @success="saveRateStatus" />
   </view>
 </template>
 
