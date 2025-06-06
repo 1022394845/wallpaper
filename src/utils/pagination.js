@@ -2,11 +2,11 @@
 export const usePagination = () => {
   // 分页信息
   const pageInfo = ref({
-    pageNum: 1,
+    pageNum: 0,
     pageSize: 9
   })
   // 列表总长度
-  const total = ref(0)
+  const total = ref(-1)
   const totalPage = computed(() => Math.ceil(total.value / pageInfo.value.pageSize) || 0)
   // 禁用加载
   const disableLoad = computed(() => {
@@ -20,7 +20,6 @@ export const usePagination = () => {
   const registerCallback = newCallback => {
     const prevCallback = callback
     callback = newCallback
-    callback() // 注册后立即执行一次
     // 注销清理
     return prevCallback
   }
