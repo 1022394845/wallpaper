@@ -93,8 +93,14 @@ const goBack = () => {
 <template>
   <view class="preview">
     <swiper circular :current="currentIndex" class="container" @change="swiperChange">
-      <swiper-item class="item" v-for="item in classList" :key="item._id">
-        <image class="image" :src="item.picurl" mode="scaleToFill" @click="toggleMaskVisible" />
+      <swiper-item class="item" v-for="(item, index) in classList" :key="item._id">
+        <image
+          class="image"
+          v-if="Math.abs(index - currentIndex) % (classList.length - 1) <= 1"
+          :src="item.picurl"
+          mode="scaleToFill"
+          @click="toggleMaskVisible"
+        />
       </swiper-item>
     </swiper>
     <!-- 信息遮罩 -->
