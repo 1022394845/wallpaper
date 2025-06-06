@@ -7,10 +7,13 @@ const { pageInfo, total, registerCallback, nextPage } = usePagination()
 
 const classid = ref(null)
 const classList = ref([])
+const loading = ref(true)
 const loadClassList = async () => {
+  loading.value = true
   const { total: totalNum, data } = await getCategoryDetailAPI(classid.value, pageInfo.value)
   total.value = totalNum
   classList.value.push(...data)
+  loading.value = false
   uni.setStorageSync('wallpaper_ClassList', classList.value)
 }
 onLoad(async e => {
@@ -38,8 +41,13 @@ const goPreview = id => {
 
 <template>
   <view class="class-list wrapper">
-    <view v-for="item in classList" :key="item._id" class="item" @click="goPreview(item._id)">
-      <image class="image" :src="item.smallPicurl" mode="scaleToFill" />
+    <view class="container">
+      <view v-for="item in classList" :key="item._id" class="item" @click="goPreview(item._id)">
+        <image class="image" :src="item.smallPicurl" mode="scaleToFill" />
+      </view>
+    </view>
+    <view class="loading-more" v-if="loading">
+      <uni-load-more status="loading"></uni-load-more>
     </view>
   </view>
 </template>
@@ -47,12 +55,15 @@ const goPreview = id => {
 <style scoped lang="scss">
 .class-list {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5rpx;
 
-  .item {
-    height: 440rpx;
+  .container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rpx;
+
+    .item {
+      height: 440rpx;
+    }
   }
 }
 </style>
