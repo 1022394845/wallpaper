@@ -12,7 +12,7 @@ const { detail } = defineProps({ detail: Object })
 </script>
 
 <template>
-  <uni-popup ref="popup" type="bottom">
+  <uni-popup ref="popup" type="bottom" :safe-area="false">
     <view class="popup-container">
       <view class="header">
         <view class="title">壁纸信息</view>
