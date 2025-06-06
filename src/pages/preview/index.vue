@@ -1,5 +1,5 @@
 <script setup>
-import { getWallpaperDetailAPI } from '@/api/wallpaper'
+import { getWallpaperDetailAPI, recordWallpaperDownloadAPI } from '@/api/wallpaper'
 import InfoPopup from './componenets/InfoPopup.vue'
 import RatePopup from './componenets/RatePopup.vue'
 import { getStatusBarHeight } from '@/utils/system'
@@ -57,6 +57,10 @@ const saveRateStatus = score => {
   uni.setStorageSync('wallpaper-ClassList', classList.value)
 }
 
+const recordDownload = async () => {
+  await recordWallpaperDownloadAPI(currentInfo.value.classid, currentInfo.value._id)
+}
+
 // 下载保存
 const download = () => {
   // #ifdef H5
@@ -85,6 +89,8 @@ const download = () => {
                 title: '保存成功',
                 icon: 'none'
               })
+              // 记录下载
+              recordDownload()
             }
           })
         },

@@ -25,3 +25,7 @@ export const setupScoreAPI = (classid, wallId, userScore) =>
 
 // 获取单张壁纸详情
 export const getWallpaperDetailAPI = id => request({ url: '/detailWall', data: { id } })
+
+// 记录壁纸下载
+export const recordWallpaperDownloadAPI = (classid, wallId) =>
+  request({ url: '/downloadWall', data: { classid, wallId } })
