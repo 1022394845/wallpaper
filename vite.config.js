@@ -7,14 +7,16 @@ import AutoImport from 'unplugin-auto-import/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // server: {
-  //   proxy: {
-  //     '/bizhi': {
-  //       target: 'https://tea.qingnian8.com/api',
-  //       changeOrigin: true
-  //     }
-  //   }
-  // },
+  server: {
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'https://tea.qingnian8.com/api/bizhi',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
+  },
   plugins: [
     uni(),
     AutoImport({

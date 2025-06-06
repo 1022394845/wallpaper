@@ -1,7 +1,14 @@
 // 网络请求
-const baseURL = 'https://tea.qingnian8.com/api/bizhi'
-// const baseURL = '/bizhi' // 基地址
-const timeout = 10000 // 连接超时上限
+import { SYSTEM_INFO } from './system'
+
+// web与小程序代理适配
+const HOST = 'https://tea.qingnian8.com/api/bizhi' // 主机地址
+const API_HOST = SYSTEM_INFO.uniPlatform === 'web' ? '' : HOST // api服务器
+const API_PROXY = SYSTEM_INFO.uniPlatform === 'web' ? '/api' : '' // api服务代理路径
+const packApiUrl = (url = '') => {
+  if (url.slice(0, 4) === 'http') return url // 已经是完整链接
+  return `${API_HOST}${API_PROXY}${url}` // 组装代理地址
+}
 
 const request = params => {
   const { url, method = 'GET', data = {} } = params
@@ -13,11 +20,11 @@ const request = params => {
 
   return new Promise((resolve, reject) => {
     uni.request({
-      url: baseURL + url,
+      url: packApiUrl(url),
       method,
       header,
       data,
-      timeout,
+      timeout: 10000, // 连接超时上限
       success: response => {
         if (response.data?.errCode === 0) resolve(response.data)
         else {
