@@ -1,5 +1,5 @@
 <script setup>
-import { getBannerListAPI, getDayRecommendAPI, getCategoryListAPI } from '@/api/wallpaper'
+import { getBannerListAPI, getDayRecommendAPI, getRecommendCategoryListAPI } from '@/api/wallpaper'
 import { getNoticeListAPI } from '@/api/notice'
 
 // banner图列表
@@ -26,7 +26,7 @@ const getDayRecommend = async () => {
 // 分类列表
 const categoryList = ref([])
 const getCategoryList = async () => {
-  const { data } = await getCategoryListAPI()
+  const { data } = await getRecommendCategoryListAPI()
   categoryList.value = data
 }
 

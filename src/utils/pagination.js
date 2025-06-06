@@ -1,4 +1,6 @@
 // 管理分页获取列表
+import { getWindowHeight, getWindowWidth } from '@/utils/system'
+
 export const usePagination = () => {
   // 分页信息
   const pageInfo = ref({
@@ -42,6 +44,13 @@ export const usePagination = () => {
     pageInfo.value.pageNum--
     if (callback) callback()
   }
+  // 计算需要加载多少分页铺满屏幕 onceHight一次加载的高度(rpx)
+  const getLoadTime = onceHight => {
+    const windowHeight = getWindowHeight()
+    const windowWidth = getWindowWidth()
+    // 需要加载 windowHeight(px) * 750 / windowWidth => rpx / onceHight(rpx) 向上取整
+    return Math.ceil((windowHeight * 750) / windowWidth / onceHight)
+  }
 
   return {
     pageInfo,
@@ -51,6 +60,7 @@ export const usePagination = () => {
     registerCallback,
     resetPage,
     nextPage,
-    prevPage
+    prevPage,
+    getLoadTime
   }
 }

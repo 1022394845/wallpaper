@@ -6,8 +6,11 @@ export const getBannerListAPI = () => request({ url: '/homeBanner' })
 // 获取每日推荐
 export const getDayRecommendAPI = () => request({ url: '/randomWall' })
 
-// 获取分类列表
-export const getCategoryListAPI = () => request({ url: '/classify' })
+// 获取首页分类列表
+export const getRecommendCategoryListAPI = () => request({ url: '/classify' })
+
+// 分页获取分类列表
+export const getCategoryListAPI = pageInfo => request({ url: '/classify', data: { ...pageInfo } })
 
 // 获取分类详情列表
 export const getCategoryDetailAPI = (classid, pageInfo) =>

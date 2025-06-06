@@ -1,9 +1,8 @@
 <script setup>
 import { getCategoryDetailAPI } from '@/api/wallpaper'
 import { usePagination } from '@/utils/pagination'
-import { getWindowHeight, getWindowWidth } from '@/utils/system'
 
-const { pageInfo, total, registerCallback, nextPage } = usePagination()
+const { pageInfo, total, registerCallback, nextPage, getLoadTime } = usePagination()
 
 const classid = ref(null)
 const classList = ref([])
@@ -20,12 +19,7 @@ onLoad(async e => {
   uni.setNavigationBarTitle({ title: e.name || '分类详情' })
   classid.value = e.classid
   registerCallback(loadClassList)
-  // 加载图片使得超过屏幕高度
-  const windowHeight = getWindowHeight()
-  const windowWidth = getWindowWidth()
-  // 一次加载3行图片 440 * 3 = 1320 rpx
-  // 需要加载 windowHeight(px) * 750 / windowWidth => rpx / 1320rpx 向上取整
-  const loadTime = Math.ceil((windowHeight * 750) / windowWidth / 1320)
+  const loadTime = getLoadTime(440 * 3)
   for (let i = 0; i < loadTime; i++) nextPage()
 })
 
