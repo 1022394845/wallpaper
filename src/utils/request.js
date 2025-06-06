@@ -1,6 +1,6 @@
 // 网络请求
-// const baseURL= 'https://tea.qingnian8.com/api/bizhi'
-const baseURL = '/bizhi' // 基地址
+const baseURL = 'https://tea.qingnian8.com/api/bizhi'
+// const baseURL = '/bizhi' // 基地址
 const timeout = 10000 // 连接超时上限
 
 const request = params => {

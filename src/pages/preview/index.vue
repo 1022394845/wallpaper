@@ -57,6 +57,34 @@ const saveRateStatus = score => {
   uni.setStorageSync('wallpaper-ClassList', classList.value)
 }
 
+// 下载保存
+const download = () => {
+  // #ifdef H5
+  uni.showModal({
+    title: '温馨提示',
+    content: '请右击或长按图片进行保存',
+    showCancel: false
+  })
+  // #endif
+
+  // #ifndef H5
+  uni.getImageInfo({
+    src: currentInfo.value.picurl,
+    success: res => {
+      uni.saveImageToPhotosAlbum({
+        filePath: res.path,
+        success: () => {
+          uni.showToast({
+            title: '保存成功',
+            icon: 'none'
+          })
+        }
+      })
+    }
+  })
+  // #endif
+}
+
 const goBack = () => {
   uni.navigateBack()
 }
@@ -90,16 +118,16 @@ const goBack = () => {
           <uni-icons class="icon" type="star"></uni-icons>
           <view class="text">{{ currentInfo?.score || '评分' }}</view>
         </view>
-        <view class="item">
+        <view class="item" @click="download">
           <uni-icons class="icon download" type="download"></uni-icons>
           <view class="text">下载</view>
         </view>
       </view>
     </view>
     <!-- 信息popup -->
-    <InfoPopup ref="infoPopup" :detail="currentInfo" />
+    <InfoPopup ref="infoPopup" v-if="currentInfo" :detail="currentInfo" />
     <!-- 评分popup -->
-    <RatePopup ref="ratePopup" :detail="currentInfo" @success="saveRateStatus" />
+    <RatePopup ref="ratePopup" v-if="currentInfo" :detail="currentInfo" @success="saveRateStatus" />
   </view>
 </template>
 

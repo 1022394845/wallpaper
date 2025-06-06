@@ -7,14 +7,14 @@ import AutoImport from 'unplugin-auto-import/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {
-    proxy: {
-      '/bizhi': {
-        target: 'https://tea.qingnian8.com/api',
-        changeOrigin: true
-      }
-    }
-  },
+  // server: {
+  //   proxy: {
+  //     '/bizhi': {
+  //       target: 'https://tea.qingnian8.com/api',
+  //       changeOrigin: true
+  //     }
+  //   }
+  // },
   plugins: [
     uni(),
     AutoImport({
