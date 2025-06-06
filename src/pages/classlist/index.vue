@@ -34,6 +34,11 @@ const goPreview = id => {
   uni.navigateTo({ url: `/pages/preview/index?id=${id}` })
 }
 
+// 销毁页面后清除缓存
+onUnload(() => {
+  uni.removeStorageSync('wallpaper_ClassList')
+})
+
 // #ifndef H5
 // 分享小程序
 onShareAppMessage(() => {
