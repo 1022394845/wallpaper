@@ -24,6 +24,23 @@ onLoad(() => {
 onReachBottom(() => {
   nextPage()
 })
+
+// #ifndef H5
+// 分享小程序
+onShareAppMessage(() => {
+  return {
+    title: '精选壁纸',
+    path: '/pages/category/index'
+  }
+})
+
+// 分享朋友圈
+onShareTimeline(() => {
+  return {
+    title: '精选壁纸'
+  }
+})
+// #endif
 </script>
 
 <template>

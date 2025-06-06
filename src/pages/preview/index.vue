@@ -132,8 +132,29 @@ const download = () => {
 }
 
 const goBack = () => {
-  uni.navigateBack()
+  uni.navigateBack({
+    fail: () => {
+      uni.reLaunch({ url: '/pages/index/index' })
+    }
+  })
 }
+
+// #ifndef H5
+// 分享小程序
+onShareAppMessage(() => {
+  return {
+    title: '精选壁纸',
+    path: `/pages/preview/index?id=${currentId.value}&single=true`
+  }
+})
+
+// 分享朋友圈
+onShareTimeline(() => {
+  return {
+    title: '精选壁纸'
+  }
+})
+// #endif
 </script>
 
 <template>

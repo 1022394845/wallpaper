@@ -5,6 +5,7 @@ import { usePagination } from '@/utils/pagination'
 const { pageInfo, total, registerCallback, nextPage, getLoadTime } = usePagination()
 
 const classid = ref(null)
+const name = ref('默认分类')
 const classList = ref([])
 const loading = ref(true)
 const loadClassList = async () => {
@@ -18,6 +19,7 @@ const loadClassList = async () => {
 onLoad(async e => {
   uni.setNavigationBarTitle({ title: e.name || '分类详情' })
   classid.value = e.classid
+  name.value = e.name
   registerCallback(loadClassList)
   const loadTime = getLoadTime(440 * 3)
   for (let i = 0; i < loadTime; i++) nextPage()
@@ -31,6 +33,23 @@ onReachBottom(() => {
 const goPreview = id => {
   uni.navigateTo({ url: `/pages/preview/index?id=${id}` })
 }
+
+// #ifndef H5
+// 分享小程序
+onShareAppMessage(() => {
+  return {
+    title: `精选壁纸-${name.value}`,
+    path: `/pages/classlist/index?classid=${classid.value}&name=${name.value}`
+  }
+})
+
+// 分享朋友圈
+onShareTimeline(() => {
+  return {
+    title: `精选壁纸-${name.value}`
+  }
+})
+// #endif
 </script>
 
 <template>

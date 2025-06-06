@@ -44,6 +44,23 @@ const goPreview = id => {
 const goNotice = id => {
   uni.navigateTo({ url: `/pages/notice/index?id=${id}` })
 }
+
+// #ifndef H5
+// 分享小程序
+onShareAppMessage(() => {
+  return {
+    title: '精选壁纸',
+    path: '/pages/index/index'
+  }
+})
+
+// 分享朋友圈
+onShareTimeline(() => {
+  return {
+    title: '精选壁纸'
+  }
+})
+// #endif
 </script>
 
 <template>
