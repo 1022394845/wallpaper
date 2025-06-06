@@ -23,6 +23,7 @@ onLoad(async e => {
       picurl: item.smallPicurl.replace('_small.webp', '.jpg')
     }
   })
+  console.log(currentIndex.value)
 })
 
 // 滑动更改index
@@ -68,15 +69,50 @@ const download = () => {
   // #endif
 
   // #ifndef H5
+  console.log(currentInfo.value.picurl)
   uni.getImageInfo({
     src: currentInfo.value.picurl,
     success: res => {
+      console.log('success')
       uni.saveImageToPhotosAlbum({
         filePath: res.path,
         success: () => {
           uni.showToast({
             title: '保存成功',
             icon: 'none'
+          })
+        }
+      })
+    },
+    fail: err => {
+      console.log(err)
+      uni.authorize({
+        scope: 'scope.writePhotosAlbum',
+        success: res => {
+          console.log(res)
+        },
+        fail: () => {
+          uni.showModal({
+            content: '是否设置保存相册权限？',
+            success: res => {
+              if (res.confirm) {
+                uni.openSetting({
+                  success: ({ authSetting }) => {
+                    if (authSetting['scope.writePhotosAlbum']) {
+                      uni.showToast({
+                        title: '设置权限成功',
+                        icon: 'none'
+                      })
+                    } else {
+                      uni.showToast({
+                        title: '设置权限失败',
+                        icon: 'none'
+                      })
+                    }
+                  }
+                })
+              }
+            }
           })
         }
       })
@@ -96,7 +132,9 @@ const goBack = () => {
       <swiper-item class="item" v-for="(item, index) in classList" :key="item._id">
         <image
           class="image"
-          v-if="Math.abs(index - currentIndex) % (classList.length - 1) <= 1"
+          v-if="
+            classList.length === 1 || Math.abs(index - currentIndex) % (classList.length - 1) <= 1
+          "
           :src="item.picurl"
           mode="scaleToFill"
           @click="toggleMaskVisible"
