@@ -33,16 +33,16 @@ export const usePagination = () => {
     }
   }
   // 下一页
-  const nextPage = () => {
+  const nextPage = async () => {
     if (total.value != -1 && pageInfo.value.pageNum >= totalPage.value) return
     pageInfo.value.pageNum++
-    if (callback) callback()
+    if (callback) await callback()
   }
   // 上一页
-  const prevPage = () => {
+  const prevPage = async () => {
     if (pageInfo.value.pageNum <= 0) return
     pageInfo.value.pageNum--
-    if (callback) callback()
+    if (callback) await callback()
   }
   // 计算需要加载多少分页铺满屏幕 onceHight一次加载的高度(rpx)
   const getLoadTime = onceHight => {

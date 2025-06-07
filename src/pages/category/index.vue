@@ -1,6 +1,7 @@
 <script setup>
 import { getCategoryListAPI } from '@/api/wallpaper'
 import { usePagination } from '@/utils/pagination'
+import { runSerial } from '@/utils/serial'
 
 const { pageInfo, total, registerCallback, nextPage, getLoadTime } = usePagination()
 
@@ -9,15 +10,18 @@ const categoryList = ref([])
 const loading = ref(true)
 const loadCategoryList = async () => {
   loading.value = true
-  const { total: totalNum, data } = await getCategoryListAPI(pageInfo.value)
-  total.value = totalNum
-  categoryList.value.push(...data)
-  loading.value = false
+  try {
+    const { total: totalNum, data } = await getCategoryListAPI(pageInfo.value)
+    total.value = totalNum
+    categoryList.value.push(...data)
+  } finally {
+    loading.value = false
+  }
 }
 onLoad(() => {
   registerCallback(loadCategoryList)
   const loadTime = getLoadTime(350 * 3)
-  for (let i = 0; i < loadTime; i++) nextPage()
+  runSerial(nextPage, loadTime)
 })
 
 // 加载更多

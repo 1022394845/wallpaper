@@ -1,9 +1,21 @@
 <script setup>
+import { getUserInfoAPI } from '@/api/user'
+
+// 联系客服电话
 const onContactCall = () => {
   uni.makePhoneCall({
     phoneNumber: '15280090178'
   })
 }
+
+const userInfo = ref({})
+const getUserInfo = async () => {
+  const { data } = await getUserInfoAPI()
+  userInfo.value = data
+}
+onLoad(() => {
+  getUserInfo()
+})
 </script>
 
 <template>
@@ -13,18 +25,31 @@ const onContactCall = () => {
       <view class="avatar">
         <image class="image" src="@/static/logo.png" mode="scaleToFill" />
       </view>
-      <view class="username">默认用户</view>
-      <view class="location">来自：福州</view>
+      <view class="username">{{ userInfo.IP || '默认用户' }}</view>
+      <view class="location"
+        >来自：{{
+          userInfo.address?.city ||
+          userInfo.address?.province ||
+          userInfo.address?.country ||
+          '未知'
+        }}</view
+      >
     </view>
     <view class="section">
       <UserOperation
         icon="download-filled"
         title="我的下载"
-        :number="2"
-        url="/pages/classlist/index"
+        :number="userInfo.downloadSize"
+        url="/pages/classlist/index?type=download&name=我的下载"
         openType="navigate"
       />
-      <UserOperation icon="star-filled" title="我的评分" :number="4" />
+      <UserOperation
+        icon="star-filled"
+        title="我的评分"
+        :number="userInfo.scoreSize"
+        url="/pages/classlist/index?type=score&name=我的评分"
+        openType="navigate"
+      />
       <UserOperation icon="chatboxes-filled" title="联系客服">
         <template #default>
           <!-- #ifdef MP -->

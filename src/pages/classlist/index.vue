@@ -1,28 +1,45 @@
 <script setup>
+import { getUserRecordAPI } from '@/api/user'
 import { getCategoryDetailAPI } from '@/api/wallpaper'
 import { usePagination } from '@/utils/pagination'
+import { runSerial } from '@/utils/serial'
 
 const { pageInfo, total, registerCallback, nextPage, getLoadTime } = usePagination()
 
 const classid = ref(null)
 const name = ref('默认分类')
+const type = ref(null) // 个人下载/评分
 const classList = ref([])
 const loading = ref(true)
 const loadClassList = async () => {
   loading.value = true
-  const { total: totalNum, data } = await getCategoryDetailAPI(classid.value, pageInfo.value)
-  total.value = totalNum
-  classList.value.push(...data)
-  loading.value = false
+  try {
+    if (type.value) {
+      const { data } = await getUserRecordAPI(type.value, pageInfo.value)
+      classList.value.push(...data)
+      // 该接口没有返回total
+      if (data.length === 0 || data.length < pageInfo.value.pageSize) {
+        total.value = classList.value.length
+      }
+    } else {
+      const { total: totalNum, data } = await getCategoryDetailAPI(classid.value, pageInfo.value)
+      total.value = totalNum
+      classList.value.push(...data)
+    }
+  } finally {
+    loading.value = false
+  }
   uni.setStorageSync('wallpaper_ClassList', classList.value)
 }
+
 onLoad(async e => {
   uni.setNavigationBarTitle({ title: e.name || '分类详情' })
   classid.value = e.classid
   name.value = e.name
+  type.value = e.type
   registerCallback(loadClassList)
   const loadTime = getLoadTime(440 * 3)
-  for (let i = 0; i < loadTime; i++) nextPage()
+  runSerial(nextPage, loadTime)
 })
 
 // 加载更多
@@ -67,6 +84,7 @@ onShareTimeline(() => {
     <view class="loading-more" v-if="loading">
       <uni-load-more status="loading"></uni-load-more>
     </view>
+    <view class="empty" v-if="!classList.length && !loading">暂无数据</view>
   </view>
 </template>
 
@@ -82,6 +100,13 @@ onShareTimeline(() => {
     .item {
       height: 440rpx;
     }
+  }
+
+  .empty {
+    margin: 30rpx auto;
+    width: fit-content;
+    font-size: 32rpx;
+    color: $wallpaper-text-color-2;
   }
 }
 </style>
