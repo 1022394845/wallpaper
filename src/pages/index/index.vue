@@ -37,6 +37,22 @@ onLoad(() => {
   getCategoryList()
 })
 
+const goBanner = info => {
+  if (info.target === 'self') {
+    // 内部跳转
+    uni.navigateTo({ url: '/pages/classlist/index?class' + info.url })
+  }
+  // #ifdef MP
+  if (info.target === 'miniProgram') {
+    // 跳转外部小程序
+    uni.navigateToMiniProgram({
+      appId: info.appid,
+      path: info.path
+    })
+  }
+  // #endif
+}
+
 const goPreview = id => {
   uni.navigateTo({ url: `/pages/preview/index?id=${id}&single=true` })
 }
@@ -77,7 +93,7 @@ onShareTimeline(() => {
         indicator-active-color="#ffffff"
       >
         <swiper-item v-for="item in bannerList" :key="item._id">
-          <image class="image" :src="item.picurl" mode="scaleToFill" />
+          <image class="image" :src="item.picurl" mode="scaleToFill" @click="goBanner(item)" />
         </swiper-item>
       </swiper>
     </view>
