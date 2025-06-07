@@ -1,14 +1,17 @@
 // 网络请求
-import { SYSTEM_INFO } from './system'
+// ---DEVELOP---
+// import { SYSTEM_INFO } from './system'
 
-// web与小程序代理适配
-const HOST = 'https://tea.qingnian8.com/api/bizhi' // 主机地址
-const API_HOST = SYSTEM_INFO.uniPlatform === 'web' ? '' : HOST // api服务器
-const API_PROXY = SYSTEM_INFO.uniPlatform === 'web' ? '/api' : '' // api服务代理路径
-const packApiUrl = (url = '') => {
-  if (url.slice(0, 4) === 'http') return url // 已经是完整链接
-  return `${API_HOST}${API_PROXY}${url}` // 组装代理地址
-}
+// // web与小程序代理适配
+// const HOST = 'https://tea.qingnian8.com/api/bizhi' // 主机地址
+// const API_HOST = SYSTEM_INFO.uniPlatform === 'web' ? '' : HOST // api服务器
+// const API_PROXY = SYSTEM_INFO.uniPlatform === 'web' ? '/api' : '' // api服务代理路径
+// const packApiUrl = (url = '') => {
+//   if (url.slice(0, 4) === 'http') return url // 已经是完整链接
+//   return `${API_HOST}${API_PROXY}${url}` // 组装代理地址
+// }
+
+const BASE_URL = 'https://tea.qingnian8.com/api/bizhi'
 
 const request = params => {
   const { url, method = 'GET', data = {} } = params
@@ -20,7 +23,8 @@ const request = params => {
 
   return new Promise((resolve, reject) => {
     uni.request({
-      url: packApiUrl(url),
+      // url: packApiUrl(url),
+      url: BASE_URL + url,
       method,
       header,
       data,
