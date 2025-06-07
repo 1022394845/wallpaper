@@ -1,5 +1,10 @@
 <script setup>
 const { title, tagList = [] } = defineProps({ title: String, tagList: Array })
+
+const emit = defineEmits(['search'])
+const onSearch = tag => {
+  emit('search', tag)
+}
 </script>
 
 <template>
@@ -9,7 +14,9 @@ const { title, tagList = [] } = defineProps({ title: String, tagList: Array })
       <slot></slot>
     </view>
     <view class="tag-list">
-      <view class="tag" v-for="(tag, index) in tagList" :key="index">{{ tag }}</view>
+      <view class="tag" v-for="(tag, index) in tagList" :key="index" @click="onSearch(tag)">
+        {{ tag }}
+      </view>
     </view>
     <view class="empty" v-if="!tagList.length">暂无数据</view>
   </view>

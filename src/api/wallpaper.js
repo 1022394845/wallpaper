@@ -29,3 +29,7 @@ export const getWallpaperDetailAPI = id => request({ url: '/detailWall', data: {
 // 记录壁纸下载
 export const recordWallpaperDownloadAPI = (classid, wallId) =>
   request({ url: '/downloadWall', data: { classid, wallId } })
+
+// 获取搜索列表
+export const getSearchListAPI = (keyword, pageInfo) =>
+  request({ url: '/searchWall', data: { keyword, ...pageInfo } })
