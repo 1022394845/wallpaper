@@ -2,16 +2,28 @@
 import TagSection from './components/TagSection.vue'
 
 const searchKey = ref('')
-const onSearch = () => {}
 
 // 历史搜索
-const historySearch = ref(['搜索1', '搜索2', '搜索3', '搜索4', '搜索5', '搜索6'])
+const historySearch = ref([])
+onLoad(() => {
+  historySearch.value = uni.getStorageSync('wallpaper_History') || []
+})
+
+// 清空历史
 const clearHistory = () => {
   historySearch.value = []
+  uni.setStorageSync('wallpaper_History', [])
 }
 
 // 热门搜索
 const recommendSearch = ref(['美女', '帅哥', '宠物', '卡通'])
+
+const onSearch = () => {
+  if (!searchKey.value) return
+  // 缓存历史搜索
+  historySearch.value = [...new Set([searchKey.value, ...historySearch.value])]
+  uni.setStorageSync('wallpaper_History', historySearch.value)
+}
 </script>
 
 <template>
