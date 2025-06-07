@@ -2,6 +2,10 @@
 import { getStatusBarHeight, getTitleBarHeight, getNavBarHeight } from '@/utils/system'
 
 const { title } = defineProps({ title: String })
+
+const goSearch = () => {
+  uni.navigateTo({ url: '/pages/search/index' })
+}
 </script>
 
 <template>
@@ -10,7 +14,7 @@ const { title } = defineProps({ title: String })
       <view class="status-bar" :style="{ height: getStatusBarHeight() + 'px' }"></view>
       <view class="title-bar" :style="{ height: getTitleBarHeight() + 'px' }">
         <view class="title">{{ title || '壁纸' }}</view>
-        <view class="search">
+        <view class="search" @click="goSearch">
           <uni-icons type="search"></uni-icons>
           <text>搜索</text>
         </view>
